@@ -1,3 +1,5 @@
+import javax.swing.tree.TreeNode;
+
 /**
  * @program: 二叉树
  * @description
@@ -7,7 +9,7 @@
 public class TestDemo {
     public static void main(String[] args) {
         BinaryTree binaryTree = new BinaryTree();
-        Node root = binaryTree.buildTree();
+        TreeNode root = binaryTree.buildTree();
         binaryTree.preOrderTraversal(root);
         System.out.println();
         binaryTree.inOrderTraversal(root);
