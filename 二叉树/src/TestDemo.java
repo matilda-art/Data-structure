@@ -9,7 +9,7 @@ import javax.swing.tree.TreeNode;
 public class TestDemo {
     public static void main(String[] args) {
         BinaryTree binaryTree = new BinaryTree();
-        TreeNode root = binaryTree.buildTree();
+        Node root = binaryTree.buildTree();
         binaryTree.preOrderTraversal(root);
         System.out.println();
         binaryTree.inOrderTraversal(root);
