@@ -23,5 +23,8 @@ public class TestDemo {
         binaryTree.getLeafSize1(root);
         System.out.println("叶子节点的个数："+BinaryTree.leafSize);
         System.out.println("叶子节点的个数："+binaryTree.getLeafSize2(root));
+
+        System.out.println("是否是完全二叉树：");
+        System.out.println(binaryTree.isCompleteTree(root));
     }
 }
