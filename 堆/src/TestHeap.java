@@ -125,6 +125,9 @@ public class TestHeap {
         return this.elem[0];
     }
 
+    
+    //时间复杂度：O(n*log2(n))
+    //空间复杂度：O(1)
     //堆排序
     public void heapSort() {
         int end = this.usedSize-1;
@@ -134,7 +137,7 @@ public class TestHeap {
             this.elem[0] = this.elem[end];
             this.elem[end] = tmp;
             //调整
-            adjustDown(0,end);
+            adjustDown(0,end);//时间复杂度为：O(log2（n）)
             end--;
         }
     }
