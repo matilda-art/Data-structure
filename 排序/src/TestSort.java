@@ -1,5 +1,8 @@
+import com.sun.java.swing.plaf.windows.WindowsInternalFrameTitlePane;
+
 import java.util.Arrays;
 import java.util.Random;
+import java.util.Stack;
 
 /**
  * @program: 排序
@@ -142,6 +145,84 @@ public class TestSort {
             }
         }
     }
+
+
+    //快速排序
+    public static void quickSort(int[] array) {
+        Stack<Integer> stack = new Stack<>();
+        int left = 0;
+        int right = array.length-1;
+        int par = partition(array,left,right);
+
+        stack.push(left);
+        stack.push(par-1);
+        stack.push(par+1);
+        stack.push(right);
+
+        while (!stack.isEmpty()) {
+            left = stack.pop();
+            right = stack.pop();
+            par = partition(array,left,right);
+            if (par > left + 1) {
+                stack.push(left);
+                stack.push(par-1);
+            }
+            if (par < right - 1) {
+                stack.push(par+1);
+                stack.push(right);
+            }
+        }
+
+    }
+
+
+    public static int partition(int[] array,int low,int high) {
+        int tmp = array[low];
+        while (low < high){
+            while (low < high && array[high] >= tmp){
+                high--;
+            }
+            array[low] = array[high];
+            while (low < high && array[low] <= tmp){
+                low++;
+            }
+            array[high] = array[low];
+        }
+        array[low] = tmp;
+        return low;
+    }
+
+    public static void three_num_mid(int[] array,int left,int right) {
+        //array[mid] <= array[left] <= array[high]
+        int mid = (left + right)/2;
+        if (array[left] > array[right]){
+            swap(array,left,right);
+        }
+        if (array[left] > array[mid]){
+            swap(array,left,mid);
+        }
+        if (array[right] < array[mid]){
+            swap(array,right-1,mid);
+        }
+    }
+    public static void swap(int[] array,int left,int right){
+        int tmp = array[left];
+        array[left] = array[right];
+        array[right] = tmp;
+    }
+
+    public static void quick(int[] array,int left,int right) {
+        if(left >= right) {
+            return;
+        }
+        int par = partition(array, left, right);
+        quick(array,left,par-1);
+        quick(array,par+1,right);
+    }
+    public static void quickSort1(int[] array) {
+        quick(array,0,array.length-1);
+    }
+
 
     public static void main1(String[] args) {
         int[] array = new int[10_0000];
