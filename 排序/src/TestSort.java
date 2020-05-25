@@ -34,6 +34,21 @@ public class TestSort {
         }
     }
 
+    public static void insert_Sort(int[] array,int start,int end){
+        for (int i = start+1; i <= end; i++) {
+            int tmp = array[i];
+            int j = i-1;
+            for (; j >= start; j--) {
+                if (array[j] > tmp){
+                    array[j+1] = array[j];
+                }else {
+                    //array[j+1] = tmp;
+                    break;
+                }
+            }
+            array[j+1] = tmp;
+        }
+    }
 
     //希尔排序
     public static  void  shellSort(int[] array) {
@@ -148,34 +163,11 @@ public class TestSort {
 
 
     //快速排序
-    public static void quickSort(int[] array) {
-        Stack<Integer> stack = new Stack<>();
-        int left = 0;
-        int right = array.length-1;
-        int par = partition(array,left,right);
-
-        stack.push(left);
-        stack.push(par-1);
-        stack.push(par+1);
-        stack.push(right);
-
-        while (!stack.isEmpty()) {
-            left = stack.pop();
-            right = stack.pop();
-            par = partition(array,left,right);
-            if (par > left + 1) {
-                stack.push(left);
-                stack.push(par-1);
-            }
-            if (par < right - 1) {
-                stack.push(par+1);
-                stack.push(right);
-            }
-        }
-
-    }
-
-
+    //时间复杂度：
+    // O(nlog2(n))     最坏情况下：1234567/7654321  O(n^2)
+    //空间复杂度：
+    // O(log2(n))     最坏情况下：O(n)
+    //稳定性：不稳定
     public static int partition(int[] array,int low,int high) {
         int tmp = array[low];
         while (low < high){
@@ -195,15 +187,15 @@ public class TestSort {
     //三数取中法
     public static void three_num_mid(int[] array,int left,int right) {
         //array[mid] <= array[left] <= array[high]
-        int mid = (left + right)/2;
+        int mid = (left+right)/2;
         if (array[left] > array[right]){
-            swap(array,left,right);
+            swap(array, left, right);
         }
-        if (array[left] > array[mid]){
-            swap(array,left,mid);
+        if (array[mid] > array[left]){
+            swap(array, mid,left);
         }
-        if (array[right] < array[mid]){
-            swap(array,right-1,mid);
+        if (array[mid] > array[right]){
+            swap(array, mid, right);
         }
     }
     public static void swap(int[] array,int left,int right){
@@ -216,14 +208,105 @@ public class TestSort {
         if(left >= right) {
             return;
         }
+
+        if (right-left+1 <= 100){
+            insert_Sort(array, left, right);
+            return;
+        }
+
+        three_num_mid(array, left, right);
+
         int par = partition(array, left, right);
         quick(array,left,par-1);
         quick(array,par+1,right);
     }
-    public static void quickSort1(int[] array) {
+    public static void quickSort(int[] array) {
         quick(array,0,array.length-1);
     }
 
+    //快速排序（非递归）
+    public static void quickSort1(int[] array) {
+        Stack<Integer> stack = new Stack<>();
+
+        int left = 0;
+        int right = array.length-1;
+        int par = partition(array,left,right);
+
+        if (par > left + 1) {
+            stack.push(left);
+            stack.push(par-1);
+        }
+        if (par < right - 1) {
+            stack.push(par+1);
+            stack.push(right);
+        }
+        while (!stack.isEmpty()) {
+            right = stack.pop();
+            left = stack.pop();
+            par = partition(array,left,right);
+            if (par > left + 1) {
+                stack.push(left);
+                stack.push(par-1);
+            }
+            if (par < right - 1) {
+                stack.push(par+1);
+                stack.push(right);
+            }
+        }
+
+    }
+
+
+    //归并排序
+    //时间复杂度：O(nlog2(n))
+    //空间复杂度：O(n)
+    //稳定性：稳定
+    //  外排序：磁盘。
+    public static void mergeSortInternal(int[] array,int low,int high){
+        if (low >= high){
+            return;
+        }
+        //分解
+        int mid = (low+high)/2;
+        mergeSortInternal(array,low,mid);
+        mergeSortInternal(array,mid+1,high);
+        //合并
+        merge(array,low,mid,high);
+    }
+
+    //归并：将两个有序段归并为一个有序段
+    public static void merge(int[] array,int low,int mid,int high){
+        int s1 = low;
+        int s2 = mid+1;
+        int len = high-low+1;
+        int[] ret = new int[len];
+        int i = 0;//用来表示ret的下标
+
+        while (s1 <= mid && s2 <= high){
+            if (array[s1] <= array[s2]){
+                ret[i++] = array[s1++];
+       /*         ret[i] = array[s1];
+                i++;
+                s1++;*/
+            }else {
+                ret[i++] = array[s2++];
+            }
+        }
+        while (s1 <= mid){
+            ret[i++] = array[s1++];
+        }
+        while (s2 <= high){
+            ret[i++] = array[s2++];
+        }
+
+        for (int j = 0; j < ret.length; j++) {
+            array[j+low] = ret[j];
+        }
+    }
+
+    public static void mergeSort(int[] array){
+        mergeSortInternal(array,0,array.length-1);
+    }
 
     public static void main1(String[] args) {
         int[] array = new int[10_0000];
