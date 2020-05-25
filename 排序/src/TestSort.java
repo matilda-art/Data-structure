@@ -192,6 +192,7 @@ public class TestSort {
         return low;
     }
 
+    //三数取中法
     public static void three_num_mid(int[] array,int left,int right) {
         //array[mid] <= array[left] <= array[high]
         int mid = (left + right)/2;
