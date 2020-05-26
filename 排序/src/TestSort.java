@@ -51,6 +51,9 @@ public class TestSort {
     }
 
     //希尔排序
+    //时间复杂度：O(n^2)
+    //空间复杂度：O(1)
+    //稳定性：不稳定
     public static  void  shellSort(int[] array) {
         int[] drr = {5,3,1};
         for (int i = 0; i < drr.length; i++) {
