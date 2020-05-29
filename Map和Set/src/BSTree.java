@@ -2,6 +2,8 @@
  * @program: Map和Set
  * @description
  * 二叉搜索树
+ 最好情况下：二叉搜索树为完全二叉树，平均比较次数为log2(n)
+ 最坏情况下：二叉搜索树退化为单支树，平均比较次数为N/2
  * @author: matilda
  * @create: 2020-05-28 19:56
  **/
