@@ -8,8 +8,21 @@ import java.util.*;
  **/
 public class TestDemo {
 
-    //十万个数据，统计重复数字及出现的次数
     public static void main(String[] args) {
+        BSTree bsTree = new BSTree();
+        int[] array = {7,2,9,18,56,15,3};
+        for (int i:array) {
+            bsTree.insert(i);
+        }
+        bsTree.proOrder(bsTree.root);
+        System.out.println();
+        bsTree.inOrder(bsTree.root);
+        System.out.println();
+        System.out.println(bsTree.search(18));
+    }
+
+    //十万个数据，统计重复数字及出现的次数
+    public static void main5(String[] args) {
         Random random = new Random();
         ArrayList<Integer> list = new ArrayList<>();
 
